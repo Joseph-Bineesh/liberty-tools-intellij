@@ -16,6 +16,7 @@ package io.openliberty.tools.intellij.lsp4jakarta.lsp4ij.persistence;
 import com.intellij.psi.*;
 import com.intellij.psi.util.InheritanceUtil;
 import io.openliberty.tools.intellij.lsp4jakarta.lsp4ij.AbstractDiagnosticsCollector;
+import io.openliberty.tools.intellij.lsp4jakarta.lsp4ij.JDTUtils;
 import io.openliberty.tools.intellij.lsp4jakarta.lsp4ij.Messages;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.lsp4j.Diagnostic;
@@ -40,6 +41,7 @@ public class PersistenceMapKeyDiagnosticsCollector extends AbstractDiagnosticsCo
     @Override
     public void collectDiagnostics(PsiJavaFile unit, List<Diagnostic> diagnostics) {
         if (unit != null) {
+            JDTUtils.getResolvedClasspathEntries(unit);
             PsiClass[] alltypes = unit.getClasses();
             PsiMethod[] methods;
             PsiField[] fields;

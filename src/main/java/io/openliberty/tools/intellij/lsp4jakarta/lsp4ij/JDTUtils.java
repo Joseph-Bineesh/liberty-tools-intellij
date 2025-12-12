@@ -13,6 +13,10 @@
 
 package io.openliberty.tools.intellij.lsp4jakarta.lsp4ij;
 
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiJavaFile;
@@ -25,9 +29,11 @@ import org.eclipse.lsp4j.Diagnostic;
 import org.eclipse.lsp4mp.commons.codeaction.CodeActionResolveData;
 
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class JDTUtils {
+    private static final Logger LOGGER = Logger.getLogger(JDTUtils.class.getName());
     // Percent encoding obtained from: https://en.wikipedia.org/wiki/Percent-encoding#Reserved_characters
     private static final String LEVEL1_URI_REGEX = "(?:\\/(?:(?:\\{(\\w|-|%20|%21|%23|%24|%25|%26|%27|%28|%29|%2A|%2B|%2C|%2F|%3A|%3B|%3D|%3F|%40|%5B|%5D)+\\})|(?:(\\w|%20|%21|%23|%24|%25|%26|%27|%28|%29|%2A|%2B|%2C|%2F|%3A|%3B|%3D|%3F|%40|%5B|%5D)+)))*\\/?";
 
@@ -122,5 +128,22 @@ public class JDTUtils {
             return fqName.substring(idx + 1);
         }
         return fqName;
+    }
+
+    public static void getResolvedClasspathEntries(PsiJavaFile file){
+        LOGGER.info("Executing getResolvedClasspathEntries-------");
+        Module module = ModuleUtilCore.findModuleForFile(file);
+        if (module != null) {
+            VirtualFile[] classFiles = ModuleRootManager.getInstance(module)
+                    .orderEntries()
+                    .recursively()
+                    .classes()
+                    .getRoots();
+
+            for (VirtualFile f : classFiles) {
+                System.out.println("ClassPath:::"+f.getPath());
+                LOGGER.info("ClassPath::"+f.getPath());
+            }
+        }
     }
 }
