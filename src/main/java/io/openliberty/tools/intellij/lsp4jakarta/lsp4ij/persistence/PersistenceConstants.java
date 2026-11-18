@@ -75,6 +75,31 @@ public class PersistenceConstants {
             TABLE_GENERATOR, TABLE_GENERATORS, SEQUENCE_GENERATOR, SEQUENCE_GENERATORS, SECONDARY_TABLE, SECONDARY_TABLES
     };
 
+    /* Bidirectional relationship annotation constants */
+    public static final String JOIN_TABLE = "jakarta.persistence.JoinTable";
+    public static final String JOIN_COLUMN = "jakarta.persistence.JoinColumn";
+    public static final String JOIN_COLUMNS = "jakarta.persistence.JoinColumns";
+    public static final String DIAGNOSTIC_CODE_INVERSE_MISSING_MAPPED_BY = "InverseSideMissingMappedBy";
+    public static final String DIAGNOSTIC_CODE_JOIN_TABLE_ON_INVERSE = "JoinTableOnInverseSide";
+    public static final String DIAGNOSTIC_CODE_JOIN_COLUMN_ON_INVERSE = "JoinColumnOnInverseSide";
+
+    /** All relationship annotations that support the {@code mappedBy} attribute. */
+    public static final String[] INVERSE_CAPABLE_RELATIONSHIP_ANNOTATIONS = {
+            ONE_TO_MANY, ONE_TO_ONE, MANY_TO_MANY
+    };
+
+    /**
+     * Annotations that are only valid on the owning side of a relationship
+     * and must not appear on the inverse side (i.e. the side that carries
+     * {@code mappedBy}).
+     */
+    public static final String[] OWNER_ONLY_ANNOTATIONS = {
+            JOIN_TABLE, JOIN_COLUMN, JOIN_COLUMNS
+    };
+
+    /** Annotation attribute name for the owning-side field reference. */
+    public static final String MAPPED_BY = "mappedBy";
+
     /* Type Constants */
     public static final String MAP_INTERFACE_FQDN = "java.util.Map";
 
@@ -159,6 +184,7 @@ public class PersistenceConstants {
     /* AttributeOverride / AssociationOverride Codes */
     public static final String DIAGNOSTIC_CODE_INVALID_ATTRIBUTE_OVERRIDE_NAME = "InvalidAttributeOverrideName";
     public static final String DIAGNOSTIC_CODE_INVALID_ASSOCIATION_OVERRIDE_NAME = "InvalidAssociationOverrideName";
+    public static final String DIAGNOSTIC_CODE_ATTRIBUTE_OVERRIDE_ON_NON_EMBEDDED = "AttributeOverrideOnNonEmbeddedField";
 
     /* PersistenceContext Codes */
     public static final String PERSISTENCE_CONTEXT = "jakarta.persistence.PersistenceContext";
@@ -217,4 +243,9 @@ public class PersistenceConstants {
     public static final String UTIL_CALENDAR = "java.util.Calendar";
     public static final String TEMPORAL_TYPE_DATE = "TemporalType.DATE";
     public static final String HTTP_SERVLET_FQ_NAME = "jakarta.servlet.http.HttpServlet";
+
+    /* NamedEntityGraph Codes */
+    public static final String NAMED_ENTITY_GRAPH = "jakarta.persistence.NamedEntityGraph";
+    public static final String NAMED_ENTITY_GRAPHS = "jakarta.persistence.NamedEntityGraphs";
+    public static final String DIAGNOSTIC_CODE_DUPLICATE_NAMED_ENTITY_GRAPH = "DuplicateNamedEntityGraphName";
 }
